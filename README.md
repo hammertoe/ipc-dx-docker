@@ -27,7 +27,12 @@ Ensure you have [Docker installed](https://docs.docker.com/get-docker/).
     ```sh
     cd ipc-dx-docker
     ```
-    
+
+1. OPTIONAL: By default the subnet started will be `r0`. If you want a different subnet ID (also affects the chain ID), then you can either set the env variable `SUBNET_ID`, or edit it in the `.env` file.
+    ```sh
+    export SUBNET_ID=r42
+    ```
+
 1. To run a single IPC node (default): run Docker `compose up`:
     ```sh
     docker compose up
