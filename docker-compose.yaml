@@ -3,10 +3,11 @@ services:
 
   docker:
     image: ghcr.io/hammertoe/ipc-dx-docker:sha-ec6b927
+    network_mode: host
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /tmp/data:/tmp/data
 
-    command: ["cd fendermint && cargo make -e BASE_DIR=/tmp/data/.ipc/r0 --makefile ./infra/Makefile.toml testnode"]
+    command: ["cd fendermint && cargo make -e BASE_DIR=/tmp/data/.ipc/${SUBNET_ID} -e SUBNET_ID=${SUBNET_ID} --makefile ./infra/Makefile.toml testnode"]
 
 
