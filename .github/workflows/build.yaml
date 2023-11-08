@@ -6,7 +6,7 @@ on:
 env:
   REGISTRY: ghcr.io
   NAMESPACE: ${{ github.repository_owner }}
-  IMAGE_NAME: filecoin-fvm-localnet
+  IMAGE_NAME: ipc-dx-docker
 
 jobs:
   build-ipc-dx-image:
