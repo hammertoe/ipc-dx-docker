@@ -19,7 +19,7 @@ Ensure you have [Docker installed](https://docs.docker.com/get-docker/).
 1. Clone this repository:
 
     ```sh
-    git clone https://github.com/hammertoe/ipc-dx-docker.git
+    git clone https://github.com/consensus-shipyard/ipc-dx-docker.git
     ```
 
 1. Navigate to the repository:
