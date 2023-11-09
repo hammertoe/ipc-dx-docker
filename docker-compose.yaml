@@ -2,7 +2,8 @@ version: '3'
 services:
 
   docker:
-    image: ghcr.io/hammertoe/ipc-dx-docker:sha-ec6b927
+    image: ghcr.io/consensus-shipyard/ipc-dx-docker:sha-f48b7bb
+
     network_mode: host
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
