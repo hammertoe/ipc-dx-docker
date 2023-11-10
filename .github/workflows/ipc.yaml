@@ -1,4 +1,4 @@
-name: Build Filecoin IPC DX Docker Image
+name: Build Filecoin IPC CLI Docker Image
 
 on:
   workflow_dispatch:
