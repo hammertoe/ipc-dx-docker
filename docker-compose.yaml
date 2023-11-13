@@ -1,7 +1,8 @@
 version: '3'
 services:
 
-  docker:
+  ipc-testnode:
+    profiles: ["testnode"]
     image: ghcr.io/hammertoe/ipc-dx-docker:sha-ec6b927
     network_mode: host
     volumes:
@@ -10,4 +11,27 @@ services:
 
     command: ["cd fendermint && cargo make -e BASE_DIR=/tmp/data/.ipc/${SUBNET_ID} -e SUBNET_ID=${SUBNET_ID} --makefile ./infra/Makefile.toml testnode"]
 
+  ipc-testnet:
+    profiles: ["testnet"]
+    image: ghcr.io/hammertoe/ipc-dx-docker:sha-ec6b927
+    network_mode: host
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /tmp/data:/tmp/data
 
+    command: ["cd fendermint && cargo make -e BASE_DIR=/tmp/data/.ipc/${SUBNET_ID} -e SUBNET_ID=${SUBNET_ID} --makefile ./infra/Makefile.toml testnet"]
+
+  ipc:
+    image: ghcr.io/hammertoe/ipc-dx-docker:sha-ec6b927
+    network_mode: host
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /tmp/data:/tmp/data
+
+    entrypoint: ["/bin/sh",  "-c", "cd fendermint && cargo make -e BASE_DIR=/tmp/data/.ipc/${SUBNET_ID} -e SUBNET_ID=${SUBNET_ID} --makefile ./infra/Makefile.toml"]
+
+  ipc-cli:
+    image: ghcr.io/consensus-shipyard/ipc-cli-docker:sha-a49ff98
+    network_mode: host
+    volumes:
+      - ~:/root
