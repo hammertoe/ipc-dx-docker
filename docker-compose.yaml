@@ -31,7 +31,7 @@ services:
     entrypoint: ["/bin/sh",  "-c", "cd fendermint && cargo make -e BASE_DIR=/tmp/data/.ipc/${SUBNET_ID} -e SUBNET_ID=${SUBNET_ID} --makefile ./infra/Makefile.toml"]
 
   ipc-cli:
-    image: ghcr.io/consensus-shipyard/ipc-cli-docker:sha-a49ff98
+    image: ghcr.io/consensus-shipyard/ipc-cli-docker:sha-713836e
     network_mode: host
     volumes:
       - ~:/root
