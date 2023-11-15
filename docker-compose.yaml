@@ -3,7 +3,7 @@ services:
 
   ipc-testnode:
     profiles: ["testnode"]
-    image: ghcr.io/consensus-shipyard/ipc-dx-docker:sha-ec6b927
+    image: ghcr.io/consensus-shipyard/ipc-dx-docker:sha-b8b9abf
     network_mode: host
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -13,7 +13,7 @@ services:
 
   ipc-testnet:
     profiles: ["testnet"]
-    image: ghcr.io/consensus-shipyard/ipc-dx-docker:sha-ec6b927
+    image: ghcr.io/consensus-shipyard/ipc-dx-docker:sha-b8b9abf
     network_mode: host
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -22,7 +22,7 @@ services:
     command: ["cd fendermint && cargo make -e BASE_DIR=/tmp/data/.ipc/${SUBNET_ID} -e SUBNET_ID=${SUBNET_ID} --makefile ./infra/Makefile.toml testnet"]
 
   ipc:
-    image: ghcr.io/consensus-shipyard/ipc-dx-docker:sha-ec6b927
+    image: ghcr.io/consensus-shipyard/ipc-dx-docker:sha-b8b9abf
     network_mode: host
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
