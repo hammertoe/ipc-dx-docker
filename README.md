@@ -33,14 +33,14 @@ Ensure you have [Docker installed](https://docs.docker.com/get-docker/).
     export SUBNET_ID=r42
     ```
 
-1. To run a single IPC node (default): run Docker `compose up`:
+1. To run a single standalone IPC node testnode::
     ```sh
-    docker compose up
+    docker compose run fendermint testnode
     ```
 
-1. To stop the network run Docker `compose down`:
+1. To stop the network run::
     ```sh
-    docker compose down
+    docker compose run fendermint testnode-down
     ```
 
 
@@ -71,7 +71,7 @@ Private key (hex ready to import in MetaMask):
 Note: both accounts use the same private key @ /tmp/data/.ipc/r0/keys/validator_key.sk
 
 Chain ID:
-	0
+	3522868364964899
 
 Fendermint API:
 	http://localhost:26658
