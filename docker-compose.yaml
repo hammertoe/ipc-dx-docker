@@ -1,34 +1,16 @@
 version: '3'
 services:
 
-  ipc-testnode:
-    profiles: ["testnode"]
-    image: ghcr.io/consensus-shipyard/ipc-dx-docker:sha-b8b9abf
+  fendermint:
+    image: sha256:9b95af07901f768fe829b041e21997a68699f637b8a755d39fc2141d11b242a2
+#    image: ghcr.io/consensus-shipyard/ipc-dx-docker:sha-b8b9abf
     network_mode: host
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /tmp/data:/tmp/data
+      - ~/.ipc:/root/.ipc
 
-    command: ["cd fendermint && cargo make -e BASE_DIR=/tmp/data/.ipc/${SUBNET_ID} -e SUBNET_ID=${SUBNET_ID} --makefile ./infra/Makefile.toml testnode"]
-
-  ipc-testnet:
-    profiles: ["testnet"]
-    image: ghcr.io/consensus-shipyard/ipc-dx-docker:sha-b8b9abf
-    network_mode: host
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /tmp/data:/tmp/data
-
-    command: ["cd fendermint && cargo make -e BASE_DIR=/tmp/data/.ipc/${SUBNET_ID} -e SUBNET_ID=${SUBNET_ID} --makefile ./infra/Makefile.toml testnet"]
-
-  ipc:
-    image: ghcr.io/consensus-shipyard/ipc-dx-docker:sha-b8b9abf
-    network_mode: host
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /tmp/data:/tmp/data
-
-    entrypoint: ["/bin/sh",  "-c", "cd fendermint && cargo make -e BASE_DIR=/tmp/data/.ipc/${SUBNET_ID} -e SUBNET_ID=${SUBNET_ID} --makefile ./infra/Makefile.toml"]
+    entrypoint: /tmp/data/entrypoint.sh
 
   ipc-cli:
     image: ghcr.io/consensus-shipyard/ipc-cli-docker:sha-713836e
