@@ -15,6 +15,13 @@ x-common-fendermint: &common-fendermint
 
 services:
 
+  fendermint:
+    <<: *common-fendermint
+    environment:
+      PRIVATE_KEY_PATH: ~/.ipc/priv_key1.txt
+      SUBNET_ID: ${SUBNET_ID}
+    entrypoint: /app/fendermint.sh
+    
   testnode:
     <<: *common-fendermint
     environment:
