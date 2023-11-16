@@ -13,7 +13,7 @@ cd /app/fendermint
 cargo make -e BASE_DIR=/tmp/data/.ipc/${SUBNET_ID} -e SUBNET_ID=${SUBNET_ID} --makefile ./infra/Makefile.toml \
      -e PRIVATE_KEY_PATH=${PRIVATE_KEY_PATH} \
      -e SUBNET_ID=${SUBNET_ID} \
-     -e BOOTSTRAPS=${BOOTSTRAP_ID}
+     -e BOOTSTRAPS=${BOOTSTRAP_ID} \
      -e PARENT_REGISTRY=${PARENT_REGISTRY} \
      -e PARENT_GATEWAY=${PARENT_GATEWAY} \
      child-validator
