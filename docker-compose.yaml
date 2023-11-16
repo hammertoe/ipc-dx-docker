@@ -1,8 +1,7 @@
 version: '3'
 
-
 x-common-fendermint: &common-fendermint
-    image: sha256:f175135e2fc11d8dca4564968ac52508468b452aa6ce1ce0bf0df30e716660e1
+    image: ghcr.io/consensus-shipyard/ipc-dx-docker:sha-3d427e1
     network_mode: host
     environment:
       SUBNET_ID: ${SUBNET_ID}
