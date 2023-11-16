@@ -1,7 +1,7 @@
 version: '3'
 
 x-common-fendermint: &common-fendermint
-    image: ghcr.io/consensus-shipyard/ipc-dx-docker:sha-3d427e1
+    image: ghcr.io/consensus-shipyard/ipc-dx-docker:sha-039cdad
     network_mode: host
     environment:
       SUBNET_ID: ${SUBNET_ID}
@@ -18,14 +18,16 @@ services:
   fendermint:
     <<: *common-fendermint
     environment:
-      PRIVATE_KEY_PATH: ~/.ipc/priv_key1.txt
+      PRIVATE_KEY_PATH: /tmp/data/.ipc/priv_key1.txt
       SUBNET_ID: ${SUBNET_ID}
+      PARENT_REGISTRY: 0xc7068Cea947035560128a6a6F4c8913523A5A44C
+      PARENT_GATEWAY: 0x0341fA160C66aBB112195192aE359a6D61df45cd
     entrypoint: /app/fendermint.sh
     
   testnode:
     <<: *common-fendermint
     environment:
-      PRIVATE_KEY_PATH: ~/.ipc/priv_key1.txt
+      PRIVATE_KEY_PATH: /tmp/data/.ipc/priv_key1.txt
       SUBNET_ID: ${SUBNET_ID}
     entrypoint: /app/fendermint.sh
     command: testnode
@@ -33,7 +35,7 @@ services:
   bootstrap:
     <<: *common-fendermint
     environment:
-      PRIVATE_KEY_PATH: ~/.ipc/priv_key1.txt
+      PRIVATE_KEY_PATH: /tmp/data/.ipc/priv_key1.txt
       SUBNET_ID: ${SUBNET_ID}
       PARENT_REGISTRY: 0xc7068Cea947035560128a6a6F4c8913523A5A44C
       PARENT_GATEWAY: 0x0341fA160C66aBB112195192aE359a6D61df45cd
@@ -43,31 +45,31 @@ services:
     <<: *common-fendermint
     environment:
       NODE_NAME: validator-1
-      PRIVATE_KEY_PATH: ~/.ipc/priv_key1.txt
+      PRIVATE_KEY_PATH: /tmp/data/.ipc/priv_key1.txt
       SUBNET_ID: ${SUBNET_ID}
       PARENT_REGISTRY: 0xc7068Cea947035560128a6a6F4c8913523A5A44C
       PARENT_GATEWAY: 0x0341fA160C66aBB112195192aE359a6D61df45cd
-    entrypoint: /app/child-validator.sh
+    entrypoint: /app/validator.sh
 
   validator2:
     <<: *common-fendermint
     environment:
       NODE_NAME: validator-2
-      PRIVATE_KEY_PATH: ~/.ipc/priv_key2.txt
+      PRIVATE_KEY_PATH: /tmp/data/.ipc/priv_key2.txt
       SUBNET_ID: ${SUBNET_ID}
       PARENT_REGISTRY: 0xc7068Cea947035560128a6a6F4c8913523A5A44C
       PARENT_GATEWAY: 0x0341fA160C66aBB112195192aE359a6D61df45cd
-    entrypoint: /app/child-validator.sh
+    entrypoint: /app/validator.sh
 
   validator3:
     <<: *common-fendermint
     environment:
       NODE_NAME: validator-2
-      PRIVATE_KEY_PATH: ~/.ipc/priv_key2.txt
+      PRIVATE_KEY_PATH: /tmp/data/.ipc/priv_key2.txt
       SUBNET_ID: ${SUBNET_ID}
       PARENT_REGISTRY: 0xc7068Cea947035560128a6a6F4c8913523A5A44C
       PARENT_GATEWAY: 0x0341fA160C66aBB112195192aE359a6D61df45cd
-    entrypoint: /app/child-validator.sh
+    entrypoint: /app/validator.sh
 
   ipc-cli:
     image: ghcr.io/consensus-shipyard/ipc-cli-docker:sha-713836e
@@ -75,4 +77,5 @@ services:
     environment:
       SUBNET_ID: ${SUBNET_ID}
     volumes:
-      - ~:/root
+      - ~/.ipc:/root/.ipc
+      - /tmp/data:/tmp/data
