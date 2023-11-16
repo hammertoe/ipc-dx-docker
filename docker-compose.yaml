@@ -1,19 +1,72 @@
 version: '3'
-services:
 
-  fendermint:
-    image: sha256:9b95af07901f768fe829b041e21997a68699f637b8a755d39fc2141d11b242a2
-#    image: ghcr.io/consensus-shipyard/ipc-dx-docker:sha-b8b9abf
+
+x-common-fendermint: &common-fendermint
+    image: sha256:f175135e2fc11d8dca4564968ac52508468b452aa6ce1ce0bf0df30e716660e1
     network_mode: host
+    environment:
+      SUBNET_ID: ${SUBNET_ID}
+      PARENT_REGISTRY: 0xc7068Cea947035560128a6a6F4c8913523A5A44C
+      PARENT_GATEWAY: 0x0341fA160C66aBB112195192aE359a6D61df45cd
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /tmp/data:/tmp/data
       - ~/.ipc:/root/.ipc
 
-    entrypoint: /tmp/data/entrypoint.sh
+
+services:
+
+  testnode:
+    <<: *common-fendermint
+    environment:
+      PRIVATE_KEY_PATH: ~/.ipc/priv_key1.txt
+      SUBNET_ID: ${SUBNET_ID}
+    entrypoint: /app/fendermint.sh
+    command: testnode
+    
+  bootstrap:
+    <<: *common-fendermint
+    environment:
+      PRIVATE_KEY_PATH: ~/.ipc/priv_key1.txt
+      SUBNET_ID: ${SUBNET_ID}
+      PARENT_REGISTRY: 0xc7068Cea947035560128a6a6F4c8913523A5A44C
+      PARENT_GATEWAY: 0x0341fA160C66aBB112195192aE359a6D61df45cd
+    entrypoint: /app/bootstrap.sh
+
+  validator1:
+    <<: *common-fendermint
+    environment:
+      NODE_NAME: validator-1
+      PRIVATE_KEY_PATH: ~/.ipc/priv_key1.txt
+      SUBNET_ID: ${SUBNET_ID}
+      PARENT_REGISTRY: 0xc7068Cea947035560128a6a6F4c8913523A5A44C
+      PARENT_GATEWAY: 0x0341fA160C66aBB112195192aE359a6D61df45cd
+    entrypoint: /app/child-validator.sh
+
+  validator2:
+    <<: *common-fendermint
+    environment:
+      NODE_NAME: validator-2
+      PRIVATE_KEY_PATH: ~/.ipc/priv_key2.txt
+      SUBNET_ID: ${SUBNET_ID}
+      PARENT_REGISTRY: 0xc7068Cea947035560128a6a6F4c8913523A5A44C
+      PARENT_GATEWAY: 0x0341fA160C66aBB112195192aE359a6D61df45cd
+    entrypoint: /app/child-validator.sh
+
+  validator3:
+    <<: *common-fendermint
+    environment:
+      NODE_NAME: validator-2
+      PRIVATE_KEY_PATH: ~/.ipc/priv_key2.txt
+      SUBNET_ID: ${SUBNET_ID}
+      PARENT_REGISTRY: 0xc7068Cea947035560128a6a6F4c8913523A5A44C
+      PARENT_GATEWAY: 0x0341fA160C66aBB112195192aE359a6D61df45cd
+    entrypoint: /app/child-validator.sh
 
   ipc-cli:
     image: ghcr.io/consensus-shipyard/ipc-cli-docker:sha-713836e
     network_mode: host
+    environment:
+      SUBNET_ID: ${SUBNET_ID}
     volumes:
       - ~:/root

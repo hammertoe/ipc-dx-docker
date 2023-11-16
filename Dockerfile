@@ -19,7 +19,7 @@ RUN apk add --no-cache bash jq curl libgcc
 # Copy only the compiled binaries and any other necessary files from the builder image
 COPY --from=builder /usr/local/cargo/bin /usr/local/cargo/bin
 COPY --from=builder /usr/src/fendermint /app/fendermint
-COPY ./fendermint.sh /app
+COPY ./entrypoints/* /app
 
 # Set any environment variables needed
 ENV PATH="/usr/local/cargo/bin:${PATH}"
@@ -28,4 +28,4 @@ ENV PATH="/usr/local/cargo/bin:${PATH}"
 RUN /app/fendermint.sh info
 
 # Set the entrypoint
-ENTRYPOINT /app/fendermint.sh
+ENTRYPOINT ["/app/fendermint.sh"]
