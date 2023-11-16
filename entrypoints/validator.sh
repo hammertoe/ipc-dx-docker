@@ -6,7 +6,7 @@ handle_sigterm() {
     exit 0
 }
 
-BOOTSTRAP_ID=$(cat /tmp/data/.ipc/${SUBNET_ID}/bootstrap.txt)@127.0.0.1:26655
+BOOTSTRAP_ID="$(cat /tmp/data/.ipc/${SUBNET_ID}/bootstrap.txt)@127.0.0.1:26655"
 
 # Start the validator node
 cd /app/fendermint

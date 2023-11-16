@@ -19,7 +19,7 @@ cargo make -e BASE_DIR=/tmp/data/.ipc/${SUBNET_ID} -e SUBNET_ID=${SUBNET_ID} --m
      bootstrap
 
 # Log the bootstrap id, as other services will need this
-cargo make --makefile ./infra/Makefile.toml cometbft-node-id > /tmp/data/.ipc/${SUBNET_ID}/bootstrap.txt
+cargo make --makefile ./infra/Makefile.toml cometbft-node-id | grep -v cargo-make > /tmp/data/.ipc/${SUBNET_ID}/bootstrap.txt
 
 # Keep running indefinitely
 tail -f /dev/null
