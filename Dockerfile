@@ -5,7 +5,7 @@ FROM rust:alpine as builder
 
 WORKDIR /usr/src/fendermint
 # Install dependencies required for the build
-RUN apk add --no-cache clang musl-dev git curl jq bash \
+RUN apk add --no-cache clang cmake musl-dev git curl jq bash libressl-dev protoc curl \
     && git clone https://github.com/consensus-shipyard/ipc.git \
     && cd ipc/contracts \
     && make gen \
