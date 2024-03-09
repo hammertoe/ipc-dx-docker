@@ -6,9 +6,11 @@ FROM rust:alpine as builder
 WORKDIR /usr/src/fendermint
 # Install dependencies required for the build
 RUN apk add --no-cache clang musl-dev git curl jq bash \
-    && git clone https://github.com/consensus-shipyard/fendermint.git . \
-    && cargo install --force cargo-make
-
+    && git clone https://github.com/consensus-shipyard/ipc.git \
+    && cd ipc/contracts \
+    && make gen \
+    && cd .. \
+    && cargo build --release
 
 # Start with a new, clean base image to reduce size
 FROM docker:cli
