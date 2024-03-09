@@ -1,11 +1,15 @@
 # syntax=docker/dockerfile:1
 
 # Use a multi-stage build to compile the application
-FROM rust:alpine as builder
+FROM rust:slim as builder
 
 WORKDIR /usr/src/fendermint
 # Install dependencies required for the build
-RUN apk add --no-cache clang cmake musl-dev git curl jq bash libressl-dev protoc curl \
+RUN apt update \
+    && apt -y install build-essential clang cmake pkg-config libssl-dev protobuf-compiler git curl jq \
+    && curl -L https://foundry.paradigm.xyz | bash \
+    && export PATH="$HOME/.foundry/bin/:${PATH}" \
+    && foundryup \
     && git clone https://github.com/consensus-shipyard/ipc.git \
     && cd ipc/contracts \
     && make gen \
@@ -26,8 +30,8 @@ COPY ./entrypoints/* /app
 # Set any environment variables needed
 ENV PATH="/usr/local/cargo/bin:${PATH}"
 
-# Pre-populate the rust cargo cache
+## Pre-populate the rust cargo cache
 RUN /app/fendermint.sh info
 
-# Set the entrypoint
+## Set the entrypoint
 ENTRYPOINT ["/app/fendermint.sh"]
